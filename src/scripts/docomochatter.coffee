@@ -11,6 +11,7 @@ Docomochatter = require('docomochatter')
 
 module.exports = (robot) ->
   client = new Docomochatter(process.env.DOCOMO_API_KEY)
+  robot.brain.data.chat_context = {}
 
   is_existing_cmd = (msg) ->
     cmds = [] # list of available hubot commands
@@ -20,15 +21,28 @@ module.exports = (robot) ->
     cmd = msg.match[1].split(' ')[0]
     cmds.indexOf(cmd) != -1
 
+  get_context = (context_id) ->
+    context = {}
+    if ctx = robot.brain.data.chat_context[context_id]
+      context.context = ctx.context
+      context.mode = ctx.mode
+    context
+
+  set_context = (context_id, res) ->
+    robot.brain.data.chat_context[context_id] =
+      context: res.context
+      mode: res.mode
+
   robot.respond /(\S+)/i, (msg) ->
     return if is_existing_cmd(msg)
-
     msg.send "No API key found for hubot-docomochatter" unless process.env.DOCOMO_API_KEY?
 
-    # TODO Keep context
+    context_id = msg.message.room
+    option = get_context(context_id)
 
-    client.create_dialogue(msg.match[1])
+    client.create_dialogue(msg.match[1], option)
       .then (response) ->
-        msg.send response.utt
+        set_context(context_id, response)
+        msg.send(response.utt)
       .catch (error) ->
-        msg.send error
+        msg.send(error)
