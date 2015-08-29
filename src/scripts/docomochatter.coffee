@@ -1,8 +1,8 @@
 # Description:
-#   chat with your hubot via Docomo Zatsudan API
+#   chat with your hubot via Docomo Zatsudan-Taiwa(雑談対話) API
 #
 # Commands:
-#   hubot TODO
+#   hubot * (it works only if it doesn't match other commands)
 #
 # Author:
 #   - toshimaru

@@ -9,5 +9,5 @@
 ## Commands
 
 ```
-hubot <TODO>
+hubot * (it works only if it doesn't match other commands)
 ```
