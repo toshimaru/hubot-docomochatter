@@ -1,6 +1,6 @@
 {
   "name": "hubot-docomochatter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "chat with your hubot via Docomo Zatsudan-Taiwa(雑談対話) API",
   "main": "index.coffee",
   "scripts": {
